@@ -1,0 +1,55 @@
+Implement observer design pattern for weather station.
+
+
+Weather station changes temperatures and subscribers should be notified.
+so the publisher is weather station it should implement Publisher interface and have methods
+ subscribe 
+ unsubscribe 
+ and notify
+ optional interface can have method getState
+ 
+weather station should implement methods:
+	subscribe  - to add subscriber to list of subscribers
+ unsubscribe  - to remove subscriber from the list
+ and notify - to call update for each subscriber
+ getState() - which will return the temperature.
+field temperature should be there.
+also should be setter setTemperature() - to be able to change -> once it is changed we should call notify about the new state all subscribers.
+Should be of course list of subscribers.
+
+
+Our Subscriber you can call him as you wish. -
+ just weather Subscriber or phoneWeatherListener.
+It should have the field "Weather Station" to be able to retrieve the state. (you can do it more abstract with field Publisher instead)
+Also we should implement method update and lets just print "recieved new event and now the temperature is : + this.station.getState()"
+this should implement interface Listener.
+
+
+Create the main method to test this .
+Sample main method: 
+	  public static void main(String[] args) {
+        WeatherStation weatherStation = new WeatherStation();
+        weatherStation.setTemperature(20);
+        WeatherSubscriber subscriber1 = new WeatherSubscriber(weatherStation);
+        WeatherSubscriber subscriber2 = new WeatherSubscriber(weatherStation);
+
+        weatherStation.subscribe(subscriber1);
+        weatherStation.subscribe(subscriber2);
+
+        weatherStation.setTemperature(25);
+        weatherStation.setTemperature(10.5);
+    }
+
+
+
+Implement this with Spring Events
+we will need :
+1. Weather event:
+	a. Extends Application event
+	b. call super(source)
+2. Weather station (its event publisher)
+	when weather changes (on set weather) create weather event and publish
+3. WeatherSubscriber (its our event listener)
+	@event listener annotation
+	and it should listen on weather event and print something like "i got update with the new temperature"
+4. create a main with 2-3 beans and run some weather changes.
